@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AllergyPage extends StatelessWidget {
+class Injection extends StatelessWidget {
   final TextEditingController allergyController = TextEditingController();
 
   @override
@@ -12,11 +12,13 @@ class AllergyPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CenterImage(),
             const SizedBox(height: 20),
-            const AllergyDropdownSection(),
+            const DiseaseSection(),
+            _buildDiseaseInput(),
             const SizedBox(height: 20),
-            _buildOtherAllergyInput(),
+            _buildVaccineInput(),
+            const SizedBox(height: 20),
+            _buildLocationInput(),
             const SizedBox(height: 20),
             _buildSubmitButton(context),
           ],
@@ -29,17 +31,17 @@ class AllergyPage extends StatelessWidget {
     return AppBar(
     leading: BackButton(
     color: Colors.white), 
-      title: const Text('Chọn Thực Phẩm Dị Ứng',style: TextStyle(color: Colors.white)),
+      title: const Text('Khai báo tiêm chủng',style: TextStyle(color: Colors.white)),
       backgroundColor: Colors.blue,
     );
   }
 
-  Widget _buildOtherAllergyInput() {
+  Widget _buildLocationInput() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Nhập thực phẩm bé dị ứng khác:',
+          'Nơi tiêm:',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 10),
@@ -47,7 +49,7 @@ class AllergyPage extends StatelessWidget {
           controller: allergyController,
           maxLines: 4,
           decoration: InputDecoration(
-            hintText: 'Nhập các thực phẩm khác...',
+            hintText: 'Nhập nơi tiêm',
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),
@@ -56,6 +58,50 @@ class AllergyPage extends StatelessWidget {
       ],
     );
   }
+  
+  Widget _buildDiseaseInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Khác:',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        ),
+        const SizedBox(height: 10),
+        TextFormField(
+          controller: allergyController,
+          maxLines: 1,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+    Widget _buildVaccineInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Vaccine/Số lô:',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        ),
+        const SizedBox(height: 10),
+        TextFormField(
+          controller: allergyController,
+          maxLines: 1,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
 
   Widget _buildSubmitButton(BuildContext context) {
     return Center(
@@ -76,45 +122,26 @@ class AllergyPage extends StatelessWidget {
   }
 }
 
-class CenterImage extends StatelessWidget {
-  const CenterImage({super.key});
+class DiseaseSection extends StatelessWidget {
+  const DiseaseSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Image.asset(
-        'assets/images/food.png',
-        fit: BoxFit.cover,
-        height: 200,
-        width: double.infinity,
-      ),
-    );
-  }
-}
-
-class AllergyDropdownSection extends StatelessWidget {
-  const AllergyDropdownSection({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final List<String> foodOptions = ['Thực phẩm 1', 'Thực phẩm 2', 'Thực phẩm 3'];
+    final List<String> diseaseOptions = ['Loại bệnh 1', 'Loại bệnh 2', 'Loại bệnh 3'];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Chọn thực phẩm bé dị ứng',
+          'Loại bệnh',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
-        _buildDropdown(foodOptions, 'Thực phẩm 1'),
-        const SizedBox(height: 10),
-        _buildDropdown(foodOptions, 'Thực phẩm 2'),
+        _buildDropdown(diseaseOptions, 'Từ bộ y tế'),
       ],
     );
   }
 
-  // Dropdown
   Widget _buildDropdown(List<String> options, String label) {
     return DropdownButtonFormField<String>(
       decoration: InputDecoration(
@@ -123,10 +150,10 @@ class AllergyDropdownSection extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.0),
         ),
       ),
-      items: options.map((String food) {
+      items: options.map((String disease) {
         return DropdownMenuItem<String>(
-          value: food,
-          child: Text(food),
+          value: disease,
+          child: Text(disease),
         );
       }).toList(),
       onChanged: (String? newValue) {

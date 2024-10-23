@@ -16,18 +16,23 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   int _selectionIndex = 0;
 
-  // Danh sách các widget sẽ hiển thị khi nhấn từng mục
-  final List<Widget> _pages = [
-    Home(),
-    History(),
-    Menu(),
-    BMIPage(),
-    AccountPage()
-  ];
+  final List<Widget> _pages = [Home(), History(), AccountPage()];
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectionIndex = index;
+      if (index == 2) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Tính năng chưa hoàn thiện'),
+        ));
+      } else if (index == 3) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Tính năng chưa hoàn thiện'),
+        ));
+      } else if (index == 4) {
+        _selectionIndex = 2;
+      } else {
+        _selectionIndex = index;
+      }
     });
   }
 
@@ -52,11 +57,9 @@ class _BottomNavState extends State<BottomNav> {
             label: 'Lịch sử',
           ),
           BottomNavigationBarItem(
-            icon:
-                Icon(Icons.qr_code, size: 40),
-            label: 'Quét mọi QR',
-            activeIcon: Icon(Icons.qr_code,
-                size: 35), 
+            icon: Icon(Icons.qr_code, size: 40),
+            label: 'Quét QR',
+            activeIcon: Icon(Icons.qr_code, size: 35),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.edit_note),

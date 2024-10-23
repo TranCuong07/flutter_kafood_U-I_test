@@ -7,7 +7,8 @@ class AccountPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tài khoản'),
+        leading: BackButton(color: Colors.white),
+        title: const Text('Tài khoản', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.blue,
       ),
       body: AccountBody(),

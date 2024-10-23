@@ -8,7 +8,8 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Thực đơn'),
+        leading: BackButton(color: Colors.white),
+        title: const Text('Thực đơn', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.blue,
       ),
       body: const MenuBody(),

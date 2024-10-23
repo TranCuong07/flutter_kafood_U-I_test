@@ -17,7 +17,8 @@ class _LoginState extends State<Login> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Login'),
+          backgroundColor: Colors.white,
+          elevation: 0,
         ),
         body: SingleChildScrollView(
           child:Padding(

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:myapp/screen/achievement.dart';
+import 'package:myapp/screen/tuition.dart';
 import 'package:myapp/screen/allergy.dart';
 import 'package:myapp/screen/bmi.dart';
 import 'package:myapp/screen/menu.dart';
+import 'package:myapp/screen/schedule.dart';
+import 'package:myapp/screen/vaccination.dart';
 
 class Home extends StatelessWidget {
   Home({super.key});
@@ -89,7 +93,6 @@ class Home extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Icon(Icons.dashboard, size: 30, color: Colors.white),
-          Icon(Icons.search, size: 30, color: Colors.white),
           Icon(Icons.notifications, size: 30, color: Colors.white),
         ],
       ),
@@ -135,23 +138,36 @@ class Home extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         switch (index) {
-                          case 3:
+                          case 1:
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Menu()),
+                                  builder: (context) => Tuition()),
                             );
-                          break;
+                          case 2:
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Schedule()),
+                            );
+                          case 3:
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Menu()),
+                            );
+                            break;
                           default:
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                  content: Text('Chức năng này chưa được hỗ trợ!')),
+                                  content:
+                                      Text('Chức năng này chưa được hỗ trợ!')),
                             );
-                      }
+                        }
                       },
                       child: Column(
                         children: [
-                          Icon(catMenuIcons[index], color: Colors.blue, size: 30),
+                          Icon(catMenuIcons[index],
+                              color: Colors.blue, size: 30),
                           const SizedBox(height: 2),
                           Text(
                             catMenuNames[index],
@@ -198,10 +214,20 @@ class Home extends StatelessWidget {
                         context,
                         MaterialPageRoute(builder: (context) => BMIPage()),
                       );
+                    case 2:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute( builder: (context) => AchievementPage()),
+                      );
                     case 6:
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => AllergyPage()),
+                      );
+                    case 7:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Vaccination()),
                       );
                       break;
                     default:

@@ -7,7 +7,9 @@ class BMIPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tính BMI cho bé'),
+        leading: BackButton(color: Colors.white),
+        title: const Text('Tính BMI cho bé',
+            style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.blue,
       ),
       body: Body(),
@@ -79,9 +81,7 @@ class ChartImage extends StatelessWidget {
     return SizedBox(
       width: 300,
       height: 300,
-      child: Image.asset(
-        "assets/images/chart.png"
-      ),
+      child: Image.asset("assets/images/chart.png"),
     );
   }
 }
@@ -131,7 +131,8 @@ class _BMICalculatorBodyState extends State<BMICalculatorBody> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                 ),
                 child: const Text(
                   'Tính BMI',
@@ -177,11 +178,11 @@ class _BMICalculatorBodyState extends State<BMICalculatorBody> {
   }
 
   String _getBMICategory(double bmi) {
-    if (bmi < 14) {
+    if (bmi < 18.5) {
       return 'Bé thiếu cân';
-    } else if (bmi < 18) {
+    } else if (bmi <= 22.9 && bmi >= 18.5) {
       return 'Bé bình thường';
-    } else if (bmi < 22) {
+    } else if (bmi > 23 && bmi <= 24.9) {
       return 'Bé thừa cân';
     } else {
       return 'Bé béo phì';
