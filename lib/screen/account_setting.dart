@@ -43,14 +43,15 @@ class AccountBody extends StatelessWidget {
 }
 
 class ProfileSection extends StatefulWidget {
+
   @override
   State<ProfileSection> createState() => _ProfileSectionState();
 }
 
 class _ProfileSectionState extends State<ProfileSection> {
-  Future<List<dynamic>> fetchChildren(String token) async {
-    String token =
+  String token =
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoxLCJpZF9zY2hvb2wiOjEsImlhdCI6MTcyOTc2MzI1NywiZXhwIjoxNzMwMzY4MDU3fQ.-8OafXuEjs7hfcnWHps4tb6otFVqJdPscrK-kcgFMf8';
+  Future<List<dynamic>> fetchChildren() async {
     final dio = Dio();
     final String baseUrl =
         'https://d7e0-2402-800-63a5-b94c-acf7-f916-8d57-eb2c.ngrok-free.app';
@@ -77,13 +78,18 @@ class _ProfileSectionState extends State<ProfileSection> {
   List<dynamic> children = [];
   bool isLoading = true;
 
-  _ProfileSectionState({required this.token});
+
   @override
   void initState() {
     super.initState();
-    fetchChildren(token).then((data) {
+    fetchChildren().then((data) {
       setState(() {
         children = data;
+        isLoading = false;
+      },);
+    }).catchError((error) {
+      print('Error: $error');
+      setState(() {
         isLoading = false;
       });
     });
@@ -119,7 +125,6 @@ class _ProfileSectionState extends State<ProfileSection> {
             ],
           ),
           const SizedBox(height: 20),
-          // Hiển thị danh sách con hoặc trạng thái đang tải
           isLoading
               ? const CircularProgressIndicator()
               : children.isEmpty
