@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 
-class AccountPage extends StatelessWidget {
+class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
+
+  @override
+  State<AccountPage> createState() => _AccountPageState();
+}
+
+class _AccountPageState extends State<AccountPage> {
+  final String token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoxLCJpZF9zY2hvb2wiOjEsImlhdCI6MTcyOTc2MzI1NywiZXhwIjoxNzMwMzY4MDU3fQ.-8OafXuEjs7hfcnWHps4tb6otFVqJdPscrK-kcgFMf8';
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +42,52 @@ class AccountBody extends StatelessWidget {
   }
 }
 
-class ProfileSection extends StatelessWidget {
-  const ProfileSection({super.key});
+class ProfileSection extends StatefulWidget {
+  @override
+  State<ProfileSection> createState() => _ProfileSectionState();
+}
+
+class _ProfileSectionState extends State<ProfileSection> {
+  Future<List<dynamic>> fetchChildren(String token) async {
+    String token =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoxLCJpZF9zY2hvb2wiOjEsImlhdCI6MTcyOTc2MzI1NywiZXhwIjoxNzMwMzY4MDU3fQ.-8OafXuEjs7hfcnWHps4tb6otFVqJdPscrK-kcgFMf8';
+    final dio = Dio();
+    final String baseUrl =
+        'https://d7e0-2402-800-63a5-b94c-acf7-f916-8d57-eb2c.ngrok-free.app';
+    final String url = '$baseUrl/get-students-by-parent';
+
+    try {
+      final response = await dio.get(
+        url,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = response.data;
+        return responseData;
+      } else {
+        throw Exception('Lỗi khi lấy danh sách con');
+      }
+    } catch (e) {
+      print('Error: $e');
+      return [];
+    }
+  }
+
+  List<dynamic> children = [];
+  bool isLoading = true;
+
+  _ProfileSectionState({required this.token});
+  @override
+  void initState() {
+    super.initState();
+    fetchChildren(token).then((data) {
+      setState(() {
+        children = data;
+        isLoading = false;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +119,20 @@ class ProfileSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          ChildCard(),
+          // Hiển thị danh sách con hoặc trạng thái đang tải
+          isLoading
+              ? const CircularProgressIndicator()
+              : children.isEmpty
+                  ? const Text('Không có dữ liệu học sinh')
+                  : Column(
+                      children: children.map((child) {
+                        return ChildCard(
+                          name: child['name'],
+                          age: child['age'],
+                          className: child['class'],
+                        );
+                      }).toList(),
+                    ),
         ],
       ),
     );
@@ -74,7 +140,16 @@ class ProfileSection extends StatelessWidget {
 }
 
 class ChildCard extends StatelessWidget {
-  const ChildCard({super.key});
+  final String name;
+  final int age;
+  final String className;
+
+  const ChildCard({
+    super.key,
+    required this.name,
+    required this.age,
+    required this.className,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -91,19 +166,20 @@ class ChildCard extends StatelessWidget {
           ),
         ],
       ),
-      child: const Row(
+      child: Row(
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             radius: 25,
             backgroundImage: AssetImage('assets/images/child.png'),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Bé: Tô Gia Hưng', style: TextStyle(fontSize: 16)),
-              Text('Tuổi: 4', style: TextStyle(color: Colors.grey)),
-              Text('Lớp: Lá 1', style: TextStyle(color: Colors.grey)),
+              Text('Bé: $name', style: const TextStyle(fontSize: 16)),
+              Text('Tuổi: $age', style: const TextStyle(color: Colors.grey)),
+              Text('Lớp: $className',
+                  style: const TextStyle(color: Colors.grey)),
             ],
           ),
         ],
