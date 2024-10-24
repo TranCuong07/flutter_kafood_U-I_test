@@ -41,7 +41,6 @@ class Vaccination extends StatelessWidget {
           Navigator.push(context,
           MaterialPageRoute(builder: (context) => Injection()),
           );
-          // Thực hiện hành động khi nút được nhấn
         },
         backgroundColor: Colors.blue,
         icon: const Icon(Icons.add_box_rounded, color: Colors.white),

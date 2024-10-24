@@ -10,18 +10,11 @@ class AchievementPage extends StatefulWidget {
 
 class _AchievementPage extends State<AchievementPage> {
   final List<String> itemsTab = [
-    "Tất cả",
-    "Học phí",
-    "Nghỉ học",
-    "Tiêm ngừa",
+    "Tuần",
+    "Tháng",
+    "Năm",
   ];
 
-  final List<IconData> iconsTab = [
-    Icons.home,
-    Icons.money,
-    Icons.search,
-    Icons.vaccines,
-  ];
   int current = 0;
   PageController pageController = PageController();
 
@@ -30,38 +23,45 @@ class _AchievementPage extends State<AchievementPage> {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(color: Colors.white),
-        title: const Text('Tính BMI cho bé',
-            style: TextStyle(color: Colors.white)),
+        title: const Text('Sổ bé ngoan', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.blue,
       ),
-      body: SingleChildScrollView(child: Column (children: [
-        _buildTabBar(),
-        const SizedBox(height: 10),
-        const ChildCard(),
-      ],),),
-    );
-  }
-
-
-
-  Widget _buildTabBar() {
-    return Container(
-      margin: const EdgeInsets.all(10),
-      child: SizedBox(
-        width: double.infinity,
-        height: 80,
-        child: ListView.builder(
-          physics: const BouncingScrollPhysics(),
-          scrollDirection: Axis.horizontal,
-          itemCount: itemsTab.length,
-          itemBuilder: (context, index) {
-            return _buildTabItem(index);
-          },
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const ChildCard(),
+            const SizedBox(height: 10),
+            _buildTabBar(),
+          ],
         ),
       ),
     );
   }
-    Widget _buildTabItem(int index) {
+
+  Widget _buildTabBar() {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
+      child: SizedBox(
+        width: double.infinity,
+        height: 80,
+        child: Align(
+          alignment: Alignment.center,
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            itemCount: itemsTab.length,
+            itemBuilder: (context, index) {
+              return _buildTabItem(index);
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTabItem(int index) {
     return Column(
       children: [
         GestureDetector(
@@ -93,17 +93,14 @@ class _AchievementPage extends State<AchievementPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    iconsTab[index],
-                    size: current == index ? 21 : 18,
-                    color: current == index ? Colors.black : Colors.grey.shade400,
-                  ),
                   const SizedBox(width: 5),
                   Text(
                     itemsTab[index],
                     style: GoogleFonts.ubuntu(
                       fontWeight: FontWeight.w500,
-                      color: current == index ? Colors.black : Colors.grey.shade400,
+                      color: current == index
+                          ? Colors.black
+                          : Colors.grey.shade400,
                     ),
                   ),
                 ],
@@ -114,8 +111,8 @@ class _AchievementPage extends State<AchievementPage> {
       ],
     );
   }
-  
 }
+
 class ChildCard extends StatelessWidget {
   const ChildCard({super.key});
 

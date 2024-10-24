@@ -10,31 +10,29 @@ class Tuition extends StatefulWidget {
 
 class _TuitionState extends State<Tuition> {
   final List<Map<String, String>> items = [
-  {
-    'title': 'Thanh toán học phí tháng 04',
-    'amount': '1.200.000 đ',
-    'date': '08/09 - 26/02/2024',
-    'status': 'thành công',
-  },
-  {
-    'title': 'Thanh toán học phí tháng 05',
-    'amount': '1.300.000 đ',
-    'date': '08/09 - 26/03/2024',
-    'status': 'chưa thanh toán',
-  },
-];
+    {
+      'title': 'Thanh toán học phí tháng 04',
+      'amount': '1.200.000 đ',
+      'date': '08/09 - 26/02/2024',
+      'status': 'thành công',
+    },
+    {
+      'title': 'Thanh toán học phí tháng 05',
+      'amount': '1.300.000 đ',
+      'date': '08/09 - 26/03/2024',
+      'status': 'chưa thanh toán',
+    },
+  ];
 
-final Map<String, Color> statusColors = {
-  'thành công': const Color(0xFFA5D6A7),  
-  'chưa thanh toán': const Color(0xFFFFAB91),  
-};
+  final Map<String, Color> statusColors = {
+    'thành công': const Color(0xFFA5D6A7),
+    'chưa thanh toán': const Color(0xFFFFAB91),
+  };
 
-final Map<String, IconData> statusIcons = {
-  'thành công': Icons.check_circle,  
-  'chưa thanh toán': Icons.error,    
-};
-
-
+  final Map<String, IconData> statusIcons = {
+    'thành công': Icons.check_circle,
+    'chưa thanh toán': Icons.error,
+  };
 
   int current = 0;
   PageController pageController = PageController();
@@ -43,9 +41,8 @@ final Map<String, IconData> statusIcons = {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-            leading: BackButton(
-    color: Colors.white),
-        title:  Text('Học phí' ,style: TextStyle(color: Colors.white)),
+        leading: BackButton(color: Colors.white),
+        title: Text('Học phí', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.blue,
       ),
       body: Column(
@@ -56,7 +53,6 @@ final Map<String, IconData> statusIcons = {
       ),
     );
   }
-
 
   Widget _buildHistoryTitle() {
     return Text(
@@ -161,7 +157,7 @@ final Map<String, IconData> statusIcons = {
         alignment: Alignment.centerRight,
         child: Column(
           children: [
-             Icon(
+            Icon(
               statusIcons[status],
               color: statusColors[status],
               size: 30,
@@ -169,7 +165,7 @@ final Map<String, IconData> statusIcons = {
             const SizedBox(height: 5),
             Text(
               status,
-              style:  TextStyle(
+              style: TextStyle(
                 color: statusColors[status],
                 fontWeight: FontWeight.bold,
               ),
